@@ -1012,8 +1012,8 @@
         }
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-BUYnXp_O.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DnNN0r10.css">
+    <script type="module" crossorigin src="/assets/index-mVY4h3eW.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BXYCyZP-.css">
   </head>
   <body class="font-sans text-[#5E548E] dark:text-[#FFF] relative min-h-screen">
 
@@ -1056,7 +1056,7 @@
             <i data-lucide="compass" class="inline w-3.5 h-3.5 mr-1 align-middle"></i>Ideas
           </button>
           <button id="btn-tab-settings" type="button" class="px-3 py-2 rounded-xl text-[#5E548E] dark:text-[#B8C0FF] hover:text-[#9F86C0] font-semibold transition-all">
-            <i data-lucide="settings" class="inline w-3.5 h-3.5 mr-1 align-middle"></i>Settings
+            <i data-lucide="settings" class="inline w-3.5 h-3.5 mr-1 align-middle"></i>Account
           </button>
           <button id="btn-tab-admin" type="button" class="d-none px-3 py-2 rounded-xl text-[#5E548E] dark:text-[#B8C0FF] hover:text-[#9F86C0] font-semibold transition-all">
             <i data-lucide="shield-check" class="inline w-3.5 h-3.5 mr-1 align-middle"></i>Admin
@@ -1404,20 +1404,20 @@
       </section>
 
       <!-- ==================================== -->
-      <!-- VIEW 5: USER SETTINGS -->
+      <!-- ACCOUNT -->
       <!-- ==================================== -->
-      <section id="view-user-settings" class="space-y-6 fade-in-up d-none pb-5">
+      <section id="view-settings" class="space-y-6 fade-in-up d-none pb-5">
         <div>
           <h2 class="fs-3 font-extrabold text-[#5E548E] d-flex align-items-center gap-1.5 mb-1">
-            <i data-lucide="settings" class="w-7 h-7 text-[#9F86C0]"></i> User Settings
+            <i data-lucide="settings" class="w-7 h-7 text-[#9F86C0]"></i> Account
           </h2>
-          <p class="text-sm text-[#5E548E]/80">Update your name, handle, photo, and active session.</p>
+          <p class="text-sm text-[#5E548E]/80">Manage your profile, sign-in details, and active session.</p>
         </div>
 
         <div class="row g-4">
           
           <!-- Section A: Account Settings -->
-          <div class="col-md-6">
+          <div class="col-lg-6">
             <div class="glass-card p-4 space-y-4">
               <h3 class="fs-6 font-bold text-[#5E548E] border-b border-[#C8B6FF]/30 pb-2 d-flex align-items-center gap-1.5">
                 <i data-lucide="user" class="w-4.5 h-4.5 text-[#9F86C0]"></i> Profile
@@ -1482,22 +1482,37 @@
                   </div>
                 </form>
                 
-                <!-- AI status and privacy -->
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="glass-card p-4 space-y-4 h-100">
+              <h3 class="fs-6 font-bold text-[#5E548E] border-b border-[#C8B6FF]/30 pb-2 d-flex align-items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-4.5 h-4.5 text-[#9F86C0]"></i> Security
+              </h3>
+
+              <div class="space-y-3 font-sans text-xs">
                 <div class="p-3 rounded-2xl bg-white/50 dark:bg-black/10 border border-[#C8B6FF]/25">
-                  <span class="font-sans font-bold text-[#5E548E] block">AI/API Status</span>
-                  <span id="settings-ai-status" class="text-[10px] text-[#9F86C0] block font-sans mt-1">Gemini suggestions use server-side configuration when available, with local fallback ideas otherwise.</span>
-                  <span class="text-[10px] text-[#9F86C0] block font-sans mt-2">Privacy note: AI suggestions may use your board text when Gemini API is enabled.</span>
+                  <span class="font-bold text-[#5E548E] block">Email address</span>
+                  <span id="settings-security-email" class="text-[11px] text-[#9F86C0] block mt-1 break-all">-</span>
                 </div>
 
-                <!-- Session -->
-                <div class="pt-3 border-t border-[#C8B6FF]/30 d-flex justify-content-between align-items-center">
+                <div class="p-3 rounded-2xl bg-white/50 dark:bg-black/10 border border-[#C8B6FF]/25 d-flex justify-content-between align-items-center gap-3">
                   <div>
-                    <span class="font-sans font-bold text-xs text-rose-500 block">Account Session</span>
-                    <span class="text-[9px] text-[#9F86C0] font-sans">Sign out and clear the active workspace state.</span>
+                    <span class="font-bold text-[#5E548E] block">Password</span>
+                    <span class="text-[10px] text-[#9F86C0] block mt-1">We will email you a secure password reset link.</span>
                   </div>
-                  <button id="btn-user-settings-logout" type="button" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-bold text-[11px] border border-red-200 cursor-pointer">Log Out</button>
+                  <button id="btn-account-password-reset" type="button" class="shrink-0 px-3 py-1.5 rounded-xl border border-[#C8B6FF]/40 text-[#5E548E] hover:bg-white text-[11px] font-bold cursor-pointer">Reset password</button>
                 </div>
 
+                <div class="pt-3 border-t border-[#C8B6FF]/30 d-flex justify-content-between align-items-center gap-3">
+                  <div>
+                    <span class="font-bold text-xs text-rose-500 block">Sign out on this device</span>
+                    <span class="text-[9px] text-[#9F86C0]">Your saved boards remain in your account.</span>
+                  </div>
+                  <button id="btn-user-settings-logout" type="button" class="shrink-0 px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-bold text-[11px] border border-red-200 cursor-pointer">Sign out</button>
+                </div>
               </div>
             </div>
           </div>
@@ -1588,101 +1603,6 @@
       </section>
 
       <!-- ==================================== -->
-      <!-- VIEW 5: SYSTEM SETTINGS + CRYTOGRAPHY LAB -->
-      <!-- ==================================== -->
-      <section id="view-settings" class="space-y-6 fade-in-up d-none pb-5">
-        <div>
-          <h2 class="fs-3 font-extrabold text-[#5E548E] d-flex align-items-center gap-1.5 mb-1">
-            <i data-lucide="settings" class="w-7 h-7 text-[#9F86C0]"></i> Settings
-          </h2>
-          <p class="text-sm text-[#5E548E]/80">Manage display preferences, board activity updates, and local session data.</p>
-        </div>
-
-        <div class="row g-4">
-          
-          <!-- Section A: Preference Toggles -->
-          <div class="col-md-6">
-            <div class="glass-card p-4 space-y-4">
-              <h3 class="fs-6 font-bold text-[#5E548E] border-b border-[#C8B6FF]/30 pb-2 d-flex align-items-center gap-1.5">
-                <i data-lucide="sliders-horizontal" class="w-4.5 h-4.5 text-[#9F86C0]"></i> Display and activity
-              </h3>
-
-              <div class="space-y-3 font-mono text-xs">
-                
-                <!-- Notifications -->
-                <div class="d-flex justify-content-between align-items-center p-3 rounded-2xl bg-white/50 dark:bg-black/10 border border-[#C8B6FF]/25">
-                  <div>
-                    <span class="font-sans font-bold text-[#5E548E] block">Board activity updates</span>
-                    <span class="text-[10px] text-[#9F86C0] block font-sans">Show collaboration activity in the app.</span>
-                  </div>
-                  <div class="form-check form-switch fs-5">
-                    <input class="form-check-input" type="checkbox" id="settings-toggle-notif" checked />
-                  </div>
-                </div>
-
-                <!-- Contrast accessibility -->
-                <div class="d-flex justify-content-between align-items-center p-3 rounded-2xl bg-white/50 dark:bg-black/10 border border-[#C8B6FF]/25">
-                  <div>
-                    <span class="font-sans font-bold text-[#5E548E] block">Reduced color</span>
-                    <span class="text-[10px] text-[#9F86C0] block font-sans">Use a lower-color display mode.</span>
-                  </div>
-                  <div class="form-check form-switch fs-5">
-                    <input class="form-check-input" type="checkbox" id="settings-toggle-contrast" />
-                  </div>
-                </div>
-
-                <!-- Caches Wipe -->
-                <div class="pt-3 border-t border-[#C8B6FF]/30 d-flex justify-content-between align-items-center">
-                  <div>
-                    <span class="font-sans font-bold text-xs text-rose-500 block">Sign out on this device</span>
-                    <span class="text-[9px] text-[#9F86C0] font-sans">End this browser session. Saved boards remain in your account.</span>
-                  </div>
-                  <button id="btn-purge-caches" type="button" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-bold text-[11px] border border-red-200 cursor-pointer">Sign out</button>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <!-- Section B: Memo privacy demo -->
-          <div class="col-md-6">
-            <div class="glass-card p-4 space-y-4">
-              <h3 class="fs-6 font-bold text-[#5E548E] border-b border-[#C8B6FF]/30 pb-2 d-flex align-items-center gap-1.5">
-                <i data-lucide="lock" class="w-4.5 h-4.5 text-emerald-500"></i> Memo privacy demo
-              </h3>
-              <p class="text-xs text-[#5E548E]/80 leading-relaxed font-sans mt-1">
-                This optional portfolio demo shows reversible local memo obfuscation. It is not encryption and is not used to protect account data.
-              </p>
-
-              <div class="space-y-3 font-mono text-[10.5px]">
-                <div>
-                  <label class="text-[#9F86C0] block uppercase mb-1">Secret memo plaintext input</label>
-                  <textarea id="crypto-plaintext" class="form-control text-xs rounded-xl border-[#C8B6FF]/40 bg-white/50 text-[#5E548E]" rows="2">Confidential Aspirations: Build an organic studio in Lake Como. 🌿</textarea>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center">
-                  <span id="shield-key-indicator" class="text-[9px] text-[#9F86C0]">Mode: reversible local obfuscation</span>
-                  <button id="btn-run-crypto-cycles" type="button" class="px-3 py-1.5 bg-[#5E548E] hover:bg-[#9F86C0] text-white font-sans text-xs rounded-xl cursor-pointer">Simulate Obfuscation</button>
-                </div>
-
-                <div id="crypto-output-group" class="space-y-2 pt-2 d-none fade-in-up">
-                  <div>
-                    <label class="text-[#9F86C0] block uppercase mb-1">Obfuscated representation (stored payload):</label>
-                    <p id="crypto-ciphertext" class="p-2 border border-emerald-200 rounded-xl bg-emerald-50/20 text-emerald-600 font-bold tracking-wider break-all text-[10px] mb-0"></p>
-                  </div>
-                  <div>
-                    <label class="text-[#9F86C0] block uppercase mb-1">Decoded locally:</label>
-                    <p id="crypto-decrypted" class="p-2 border border-[#C8B6FF]/30 rounded-xl bg-[#F8F7FF] text-[#5E548E] font-medium text-xs mb-0"></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </section>
-
     </main>
 
     <!-- BEAUTIFUL FOOTER -->

@@ -734,16 +734,14 @@ body,
   #view-home,
   #view-studio,
   #view-gallery,
-  #view-settings,
-  #view-user-settings {
+  #view-settings {
     gap: 0.85rem !important;
   }
 
   .desk-search-strip,
   .desk-sidebar-card,
   #view-gallery .glass-card,
-  #view-settings .glass-card,
-  #view-user-settings .glass-card {
+  #view-settings .glass-card {
     padding: 0.9rem !important;
     border-radius: 1rem !important;
   }

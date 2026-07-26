@@ -1,5 +1,5 @@
 export function showTab(tabId, { renderUserBoardsList, refreshStudioDisplay, renderUserSettings }) {
-  ['home', 'studio', 'gallery', 'settings', 'user-settings', 'admin'].forEach(id => {
+  ['home', 'studio', 'gallery', 'settings', 'admin'].forEach(id => {
     document.getElementById(`view-${id}`)?.classList.add('d-none');
     document.getElementById(`btn-tab-${id}`)?.classList.remove('bg-white', 'shadow-sm', 'text-[#9F86C0]');
   });
@@ -20,7 +20,7 @@ export function showTab(tabId, { renderUserBoardsList, refreshStudioDisplay, ren
     renderUserBoardsList();
   } else if (tabId === 'studio') {
     refreshStudioDisplay();
-  } else if (tabId === 'user-settings') {
+  } else if (tabId === 'settings') {
     renderUserSettings?.();
   }
 }

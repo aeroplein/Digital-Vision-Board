@@ -19,25 +19,3 @@ export function decryptText(cipher, key) {
     return cipher;
   }
 }
-
-export function setupCryptoLab({ getCurrentUser }) {
-  const pText = document.getElementById('crypto-plaintext');
-  const btn = document.getElementById('btn-run-crypto-cycles');
-  const outputGroup = document.getElementById('crypto-output-group');
-  const cipherPlaceholder = document.getElementById('crypto-ciphertext');
-  const decPlaceholder = document.getElementById('crypto-decrypted');
-
-  btn.addEventListener('click', () => {
-    const orig = pText.value;
-    if (!orig) return;
-
-    outputGroup.classList.remove('d-none');
-
-    const currentUser = getCurrentUser();
-    const encrypted = encryptText(orig, currentUser?.id || 'aura_test_salt');
-    cipherPlaceholder.textContent = encrypted;
-
-    const decrypted = decryptText(encrypted, currentUser?.id || 'aura_test_salt');
-    decPlaceholder.textContent = decrypted;
-  });
-}

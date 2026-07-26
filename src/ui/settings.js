@@ -1,6 +1,5 @@
 import { parseJsonResponse } from '../services/apiClient.js';
 import { escapeHtml } from '../utils/html.js';
-import { showConfirmDialog } from './confirmDialog.js';
 
 const DEFAULT_PREFERENCES = {
   darkMode: false,
@@ -90,8 +89,8 @@ export function renderUserSettings({ getCurrentUser }) {
   if (avatarUrlInput) avatarUrlInput.value = user.avatarUrl || '';
   if (avatarFileInput) avatarFileInput.value = '';
   renderAvatarPreview(user);
-  setToggleChecked('settings-toggle-notif', preferences.notificationsEnabled);
-  setToggleChecked('settings-toggle-contrast', preferences.highContrast);
+  const securityEmail = document.getElementById('settings-security-email');
+  if (securityEmail) securityEmail.textContent = user.email || 'No email available';
 
   applyPreferenceEffects(preferences);
   lucide.createIcons();
@@ -104,51 +103,13 @@ export function setupSettingsHandlers({
   showSyncBanner,
   handleLogout
 }) {
-  const toggleNotif = document.getElementById('settings-toggle-notif');
-  const toggleContr = document.getElementById('settings-toggle-contrast');
-  const logoutBtn = document.getElementById('btn-purge-caches');
   const userLogoutBtn = document.getElementById('btn-user-settings-logout');
+  const passwordResetBtn = document.getElementById('btn-account-password-reset');
   const profileForm = document.getElementById('settings-profile-form');
   const avatarFileInput = document.getElementById('settings-profile-avatar-file');
   const avatarUrlInput = document.getElementById('settings-profile-avatar-url');
   const clearAvatarBtn = document.getElementById('settings-profile-clear-avatar');
   const profileSaveBtn = document.getElementById('settings-profile-save');
-
-  async function savePreferences(nextPreferences, successMessage) {
-    const user = getCurrentUser();
-    if (!user) {
-      setState('empty');
-      return;
-    }
-
-    setState('loading');
-
-    try {
-      const res = await fetchWithCredentials('/api/auth/preferences', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(nextPreferences)
-      });
-
-      const data = await parseJsonResponse(res, 'Preference update failed.');
-      if (!res.ok) {
-        throw new Error(data?.error || 'Preference update failed.');
-      }
-
-      const savedPreferences = data.preferences || nextPreferences;
-      setCurrentUser({
-        ...user,
-        preferences: savedPreferences
-      });
-      applyPreferenceEffects(savedPreferences);
-      renderUserSettings({ getCurrentUser });
-      showSyncBanner(successMessage, false);
-    } catch (error) {
-      console.warn('Preference update failed:', error);
-      setState('error');
-      showSyncBanner(error.message || 'Could not save settings. Please try again.', true);
-    }
-  }
 
   async function uploadAvatarFile(file) {
     if (!file) return;
@@ -273,36 +234,6 @@ export function setupSettingsHandlers({
     }
   }
 
-  function handlePreferenceChange(changedValues, message) {
-    const user = getCurrentUser();
-    if (!user) {
-      setState('empty');
-      return;
-    }
-
-    const nextPreferences = {
-      ...getUserPreferences(user),
-      ...changedValues
-    };
-
-    applyPreferenceEffects(nextPreferences);
-    savePreferences(nextPreferences, message);
-  }
-
-  toggleNotif?.addEventListener('change', () => {
-    handlePreferenceChange(
-      { notificationsEnabled: toggleNotif.checked },
-      `Preference saved. Collaborative alerts: ${toggleNotif.checked ? 'Enabled' : 'Disabled'}.`
-    );
-  });
-
-  toggleContr?.addEventListener('change', () => {
-    handlePreferenceChange(
-      { highContrast: toggleContr.checked },
-      `Preference saved. Contrast: ${toggleContr.checked ? 'Enabled' : 'Disabled'}.`
-    );
-  });
-
   avatarFileInput?.addEventListener('change', () => {
     uploadAvatarFile(avatarFileInput.files?.[0]);
   });
@@ -319,22 +250,40 @@ export function setupSettingsHandlers({
     saveProfile();
   });
 
-  logoutBtn?.addEventListener('click', async () => {
-    const confirmed = await showConfirmDialog({
-      eyebrow: 'Local session cleanup',
-      title: 'Wipe local cache?',
-      message: 'This clears temporary session keys from this browser. Your saved boards stay in the cloud database.',
-      confirmText: 'Wipe cache',
-      cancelText: 'Not now'
-    });
-
-    if (confirmed) {
-      handleLogout();
-    }
-  });
-
   userLogoutBtn?.addEventListener('click', () => {
     handleLogout();
+  });
+
+  async function sendAccountEmail(endpoint, button, pendingText, successMessage) {
+    const user = getCurrentUser();
+    if (!user?.email) return;
+
+    const originalText = button?.textContent || '';
+    if (button) {
+      button.disabled = true;
+      button.textContent = pendingText;
+    }
+
+    try {
+      const res = await fetchWithCredentials(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: user.email })
+      });
+      if (!res.ok) throw new Error('We could not complete that request. Please try again.');
+      showSyncBanner(successMessage, false);
+    } catch (error) {
+      showSyncBanner(error.message || 'We could not complete that request. Please try again.', true);
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.textContent = originalText;
+      }
+    }
+  }
+
+  passwordResetBtn?.addEventListener('click', () => {
+    sendAccountEmail('/api/auth/forgot-password', passwordResetBtn, 'Sending...', 'We sent a secure password reset link to your email.');
   });
 
   document.getElementById('settings-content')?.setAttribute('aria-live', 'polite');
