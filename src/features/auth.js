@@ -72,7 +72,7 @@ export function renderUserProfileUI({
     const avatarMarkup = renderSessionAvatar(currentUser);
     container.innerHTML = `
       <div class="session-card d-flex align-items-center gap-2">
-        <button id="btn-profile-settings" type="button" class="session-profile-button d-flex align-items-center gap-2 border-0 bg-transparent p-0 cursor-pointer" aria-label="Open user settings for ${safeName}" title="${safeEmail}">
+        <button id="btn-profile-settings" type="button" class="session-profile-button d-flex align-items-center gap-2 border-0 bg-transparent p-0 cursor-pointer" aria-label="Open account settings for ${safeName}" title="${safeEmail}">
           <span class="session-copy text-right">
             <span class="session-name text-xs font-bold text-plum dark:text-cream mb-0 leading-tight d-block">${safeName}</span>
             <span class="session-status text-[9px] font-mono text-dusty uppercase d-block">${safeUsername}</span>

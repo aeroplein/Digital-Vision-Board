@@ -19,7 +19,7 @@ import { fetchWithCredentials, parseJsonResponse } from './services/apiClient.js
 import { showTab as showTabView, setupNavTriggers as setupNavigationTriggers } from './ui/navigation.js';
 import { setupSearchHandlers as setupBoardSearchHandlers } from './ui/search.js';
 import { renderUserSettings as renderUserSettingsView, setupSettingsHandlers as setupPreferenceHandlers } from './ui/settings.js';
-import { decryptText, encryptText, setupCryptoLab as setupCryptoLabHandlers } from './utils/cryptoLab.js';
+import { decryptText, encryptText } from './utils/cryptoLab.js';
 import { escapeHtml } from './utils/html.js';
 import { imageDataAttributes, imageFallbackMarkup, resolveImageSource } from './utils/images.js';
 
@@ -548,7 +548,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupItemForm();
   setupSettingsHandlers();
   setupGalleryHandlers();
-  setupCryptoLab();
   setupExportPdfHandlers();
   setupSearchHandlers();
 
@@ -591,7 +590,7 @@ function renderUserProfileUI() {
     getCurrentUser: () => currentUser,
     handleLogout,
     openUserSettings: () => {
-      showTab('user-settings');
+      showTab('settings');
     },
     authModalObj
   });
@@ -2822,14 +2821,7 @@ function populatePushSelection() {
   select.innerHTML = boards.map(b => `<option value="${b.id}">${escapeHtml(b.title || 'Untitled board')}</option>`).join('');
 }
 
-// 13. LOCAL OBFUSCATION LAB TESTING
-function setupCryptoLab() {
-  setupCryptoLabHandlers({
-    getCurrentUser: () => currentUser
-  });
-}
-
-// 14. PREFERENCES PANEL TOGGLES
+// 13. ACCOUNT SETTINGS
 function setupSettingsHandlers() {
   setupPreferenceHandlers({
     getCurrentUser: () => currentUser,
@@ -2849,7 +2841,7 @@ function renderUserSettings() {
   });
 }
 
-// 15. PERIODIC COLLABORATION UPDATES
+// 14. PERIODIC COLLABORATION UPDATES
 function startCollaborationTicker() {
   startCollaborationTickerFeature({
     getCurrentUser: () => currentUser,
