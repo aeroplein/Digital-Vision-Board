@@ -229,13 +229,9 @@ Copy `.env.example` to `.env` for local development values. `.env` is ignored by
 - View lightweight board activity in the app
 
 ## Screenshots
+<img width="1821" height="1062" alt="resim" src="https://github.com/user-attachments/assets/483e1361-1c40-4f63-abbc-098881952aed" />
+<img width="1727" height="1067" alt="resim" src="https://github.com/user-attachments/assets/9db4cd1b-d3a4-4dda-a970-3827f389b278" />
 
-Add only screenshots captured from this version of the app. Recommended portfolio views are:
-
-- Dashboard / board list
-- Vision board canvas
-- AI recommendations panel
-- Collaboration invite flow
 
 Do not present a screenshot as a live feature if it uses sample or fallback data.
 
