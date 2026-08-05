@@ -233,8 +233,6 @@ Copy `.env.example` to `.env` for local development values. `.env` is ignored by
 <img width="1727" height="1067" alt="resim" src="https://github.com/user-attachments/assets/9db4cd1b-d3a4-4dda-a970-3827f389b278" />
 
 
-Do not present a screenshot as a live feature if it uses sample or fallback data.
-
 ## Submission Packaging
 
 For coursework/demo ZIP submission:
