@@ -17,6 +17,18 @@
 
     <!-- Global UI tokens, cards, studio — incremental layer -->
     <style>
+      /* Keep icon-only controls visually centered, regardless of SVG baseline. */
+      .icon-only-button {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
+
+      .icon-only-button svg {
+        display: block;
+      }
+
       :root {
         /* Palette (unchanged) */
         --glass-bg: rgba(252, 251, 255, 0.92);
@@ -1071,7 +1083,7 @@
           </div>
 
           <!-- Dark mode option toggle -->
-          <button id="btn-darkMode" type="button" class="p-2 rounded-xl border border-[#C8B6FF]/30 hover:bg-[#C8B6FF]/10 text-[#5E548E] dark:text-[#B8C0FF] transition-all cursor-pointer" aria-label="Toggle dark mode">
+          <button id="btn-darkMode" type="button" class="icon-only-button p-2 rounded-xl border border-[#C8B6FF]/30 hover:bg-[#C8B6FF]/10 text-[#5E548E] dark:text-[#B8C0FF] transition-all cursor-pointer" aria-label="Toggle dark mode">
             <i data-lucide="moon" class="w-4 h-4 dark-hidden"></i>
             <i data-lucide="sun" class="w-4 h-4 light-hidden hidden"></i>
           </button>
@@ -1185,7 +1197,7 @@
         <!-- Studio active board toolbar selection -->
         <div id="studio-toolbar" class="glass-card p-3 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
           <div class="d-flex align-items-center gap-2">
-            <button id="btn-studio-back" type="button" class="p-2 rounded-xl border hover:bg-[#C8B6FF]/15 text-[#5E548E] cursor-pointer" aria-label="Back to dashboard">
+            <button id="btn-studio-back" type="button" class="icon-only-button p-2 rounded-xl border hover:bg-[#C8B6FF]/15 text-[#5E548E] cursor-pointer" aria-label="Back to dashboard">
               <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </button>
             <div>
@@ -1486,12 +1498,12 @@
           </div>
 
           <div class="col-lg-6">
-            <div class="glass-card p-4 space-y-4 h-100">
+            <div class="glass-card p-4 space-y-4 h-100 d-flex flex-column">
               <h3 class="fs-6 font-bold text-[#5E548E] border-b border-[#C8B6FF]/30 pb-2 d-flex align-items-center gap-1.5">
                 <i data-lucide="shield-check" class="w-4.5 h-4.5 text-[#9F86C0]"></i> Security
               </h3>
 
-              <div class="space-y-3 font-sans text-xs">
+              <div class="space-y-3 font-sans text-xs flex-grow-1 d-flex flex-column">
                 <div class="p-3 rounded-2xl bg-white/50 dark:bg-black/10 border border-[#C8B6FF]/25">
                   <span class="font-bold text-[#5E548E] block">Email address</span>
                   <span id="settings-security-email" class="text-[11px] text-[#9F86C0] block mt-1 break-all">-</span>
@@ -1505,7 +1517,7 @@
                   <button id="btn-account-password-reset" type="button" class="shrink-0 px-3 py-1.5 rounded-xl border border-[#C8B6FF]/40 text-[#5E548E] hover:bg-white text-[11px] font-bold cursor-pointer">Reset password</button>
                 </div>
 
-                <div class="pt-3 border-t border-[#C8B6FF]/30 d-flex justify-content-between align-items-center gap-3">
+                <div class="mt-auto pt-3 border-t border-[#C8B6FF]/30 d-flex justify-content-between align-items-center gap-3">
                   <div>
                     <span class="font-bold text-xs text-rose-500 block">Sign out on this device</span>
                     <span class="text-[9px] text-[#9F86C0]">Your saved boards remain in your account.</span>

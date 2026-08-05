@@ -79,7 +79,7 @@ export function renderUserProfileUI({
           </span>
           ${avatarMarkup}
         </button>
-        <button id="btn-logout" type="button" class="p-1.5 rounded-lg border hover:bg-red-50 text-red-500 cursor-pointer align-middle ml-1" title="Logout Session" aria-label="Log out">
+        <button id="btn-logout" type="button" class="icon-only-button p-1.5 rounded-lg border hover:bg-red-50 text-red-500 cursor-pointer align-middle ml-1" title="Logout Session" aria-label="Log out">
           <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
         </button>
       </div>

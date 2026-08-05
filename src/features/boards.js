@@ -119,7 +119,7 @@ export function renderUserBoardsList({
               <h4 class="board-card-title font-extrabold text-[#5E548E] mb-1">${safeTitle}</h4>
             </div>
             
-            <button type="button" class="p-1 px-2 border text-[#5E548E] rounded-lg btn-edit-board-cfg" data-id="${b.id}" title="Edit board settings" aria-label="Edit board settings">
+            <button type="button" class="icon-only-button p-1 border text-[#5E548E] rounded-lg btn-edit-board-cfg" data-id="${b.id}" title="Edit board settings" aria-label="Edit board settings">
               <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
             </button>
           </div>
