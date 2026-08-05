@@ -821,7 +821,7 @@ function refreshStudioDisplay() {
             </span>
             <div class="d-flex gap-1">
               ${isEncrypted ? '<i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-500" title="Obfuscated locally"></i>' : ''}
-              <button type="button" class="p-0.5 border-0 hover:bg-[#C8B6FF]/20 text-[#5E548E] rounded btn-card-edit-action" data-id="${it.id}" aria-label="Edit ${safeTitle}">
+              <button type="button" class="icon-only-button p-0.5 border-0 hover:bg-[#C8B6FF]/20 text-[#5E548E] rounded btn-card-edit-action" data-id="${it.id}" aria-label="Edit ${safeTitle}">
                 <i data-lucide="edit-3" class="w-3 h-3"></i>
               </button>
             </div>
@@ -836,10 +836,10 @@ function refreshStudioDisplay() {
             <span class="card-size-indicator text-[8px] font-mono text-dusty lowercase d-none">${Math.round(renderedSize.width)}x${Math.round(renderedSize.height)}px</span>
           </div>
           <div class="d-flex items-center gap-1">
-            <button type="button" class="p-0.5 border-0 hover:bg-[#C8B6FF]/20 text-[#5E548E] rounded btn-card-send-back" data-id="${it.id}" title="Send to Back" aria-label="Send ${safeTitle} to back" style="cursor: pointer;">
+            <button type="button" class="icon-only-button p-0.5 border-0 hover:bg-[#C8B6FF]/20 text-[#5E548E] rounded btn-card-send-back" data-id="${it.id}" title="Send to Back" aria-label="Send ${safeTitle} to back" style="cursor: pointer;">
               <i data-lucide="chevrons-down" class="w-3 h-3"></i>
             </button>
-            <button type="button" class="p-0.5 border-0 hover:bg-[#C8B6FF]/20 text-[#5E548E] rounded btn-card-bring-front" data-id="${it.id}" title="Bring to Front" aria-label="Bring ${safeTitle} to front" style="cursor: pointer;">
+            <button type="button" class="icon-only-button p-0.5 border-0 hover:bg-[#C8B6FF]/20 text-[#5E548E] rounded btn-card-bring-front" data-id="${it.id}" title="Bring to Front" aria-label="Bring ${safeTitle} to front" style="cursor: pointer;">
               <i data-lucide="chevrons-up" class="w-3 h-3"></i>
             </button>
           </div>
