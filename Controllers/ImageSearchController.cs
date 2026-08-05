@@ -8,6 +8,7 @@ namespace DigitalVisionBoard.Controllers
 {
     public class ImageSearchController : BaseApiController
     {
+        private const int MaxProxiedImageBytes = 15 * 1024 * 1024;
         private readonly HttpClient _httpClient;
         private readonly ILogger<ImageSearchController> _logger;
 
@@ -77,6 +78,50 @@ namespace DigitalVisionBoard.Controllers
             return wantsJson ? Ok(new { url = finalFallbackUrl }) : await ReturnImageOrRedirectAsync(finalFallbackUrl);
         }
 
+        [HttpGet("api/images/proxy")]
+        [EnableRateLimiting("provider")]
+        public async Task<IActionResult> ProxyForVisualExport([FromQuery] string? url)
+        {
+            if (!TryGetTrustedUnsplashImageUrl(url, out var imageUrl))
+            {
+                return BadRequest(new { error = "Only Unsplash image URLs can be proxied for visual export." });
+            }
+
+            try
+            {
+                using var response = await _httpClient.GetAsync(imageUrl, HttpCompletionOption.ResponseHeadersRead);
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogWarning("Visual export image proxy returned status {StatusCode}.", response.StatusCode);
+                    return StatusCode(StatusCodes.Status502BadGateway, new { error = "The image could not be prepared for export." });
+                }
+
+                var contentType = response.Content.Headers.ContentType?.MediaType;
+                if (string.IsNullOrWhiteSpace(contentType) || !contentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase))
+                {
+                    return BadRequest(new { error = "The requested export asset is not an image." });
+                }
+
+                if (response.Content.Headers.ContentLength is > MaxProxiedImageBytes)
+                {
+                    return BadRequest(new { error = "The requested export image is too large." });
+                }
+
+                var imageBytes = await response.Content.ReadAsByteArrayAsync();
+                if (imageBytes.Length > MaxProxiedImageBytes)
+                {
+                    return BadRequest(new { error = "The requested export image is too large." });
+                }
+
+                return File(imageBytes, contentType);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Visual export image proxy failed.");
+                return StatusCode(StatusCodes.Status502BadGateway, new { error = "The image could not be prepared for export." });
+            }
+        }
+
         private async Task<IActionResult> ReturnImageOrRedirectAsync(string imageUrl)
         {
             try
@@ -103,6 +148,20 @@ namespace DigitalVisionBoard.Controllers
                 _logger.LogWarning(ex, "Image proxy fetch failed. Falling back to redirect.");
                 return Redirect(imageUrl);
             }
+        }
+
+        private static bool TryGetTrustedUnsplashImageUrl(string? rawUrl, out string imageUrl)
+        {
+            imageUrl = string.Empty;
+            if (!Uri.TryCreate(rawUrl, UriKind.Absolute, out var parsedUrl) ||
+                !string.Equals(parsedUrl.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase) ||
+                !string.Equals(parsedUrl.Host, "images.unsplash.com", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            imageUrl = parsedUrl.ToString();
+            return true;
         }
 
         private static string GetFallbackImageUrl(string query, string? sig)

@@ -2906,6 +2906,19 @@ function isUnsafeExportImageSource(src) {
   }
 }
 
+function getVisualExportImageSource(src) {
+  try {
+    const url = new URL(src, window.location.href);
+    if (url.protocol === 'https:' && url.hostname === 'images.unsplash.com') {
+      return `/api/images/proxy?url=${encodeURIComponent(url.href)}`;
+    }
+  } catch {
+    // The existing fallback keeps malformed or unsupported sources out of the export canvas.
+  }
+
+  return '';
+}
+
 const exportColorStyleProperties = [
   'background-color',
   'background-image',
@@ -2989,6 +3002,15 @@ function prepareVisualExportClone(clonedDocument) {
   clonedCanvas.querySelectorAll('img').forEach(img => {
     const source = img.currentSrc || img.src || img.getAttribute('src') || '';
     if (!isUnsafeExportImageSource(source)) return;
+
+    const exportSource = getVisualExportImageSource(source);
+    if (exportSource) {
+      img.src = exportSource;
+      img.removeAttribute('srcset');
+      img.removeAttribute('sizes');
+      img.removeAttribute('loading');
+      return;
+    }
 
     const fallback = clonedDocument.createElement('div');
     fallback.className = 'image-fallback d-flex flex-column align-items-center justify-content-center text-center w-full h-full p-3 bg-[#F8F7FF] text-[#5E548E]';
