@@ -766,7 +766,7 @@ function refreshStudioDisplay() {
       let listItems = steps.map((step, index) => `
         <li class="d-flex align-items-center gap-1 px-1 py-0.5 text-[11px] font-mono">
           <input type="checkbox" class="form-check-input mt-0 board-note-check" data-id="${it.id}" data-index="${index}" ${step.checked ? 'checked' : ''} />
-          <span class="line-clamp-1 pr-1">${escapeHtml(step.text)}</span>
+          <span class="flex-grow min-w-0 pr-1 whitespace-normal break-words">${escapeHtml(step.text)}</span>
         </li>
       `).join('');
       subHtml = `<ul class="list-unstyled space-y-1 my-1.5">${listItems || '<li>Checklist Empty</li>'}</ul>`;
