@@ -229,8 +229,12 @@ Copy `.env.example` to `.env` for local development values. `.env` is ignored by
 - View lightweight board activity in the app
 
 ## Screenshots
-<img width="1821" height="1062" alt="resim" src="https://github.com/user-attachments/assets/483e1361-1c40-4f63-abbc-098881952aed" />
-<img width="1727" height="1067" alt="resim" src="https://github.com/user-attachments/assets/9db4cd1b-d3a4-4dda-a970-3827f389b278" />
+<img width="1825" height="1061" alt="resim" src="https://github.com/user-attachments/assets/1e46cd5e-936b-465b-8fba-6ef078569f0c" />
+<img width="1738" height="992" alt="resim" src="https://github.com/user-attachments/assets/d02ebc64-1a21-4ae5-9fdc-0dca79993e4f" />
+<img width="625" height="823" alt="resim" src="https://github.com/user-attachments/assets/a72d359e-a624-4556-ab9c-b1e0c280cf4c" />
+<img width="506" height="750" alt="resim" src="https://github.com/user-attachments/assets/b3d155dc-aa0c-4334-93a8-dc6e0176c3f6" />
+<img width="507" height="750" alt="resim" src="https://github.com/user-attachments/assets/c3c61b32-24cb-43dd-96d6-8f44d93f392a" />
+
 
 
 ## Submission Packaging
