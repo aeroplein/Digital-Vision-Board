@@ -290,7 +290,6 @@ function getSelectedCardColorValue() {
 function isImageKeywordQuery(value) {
   const trimmed = String(value || '').trim();
   return Boolean(trimmed) &&
-    !trimmed.startsWith('/data/') &&
     !trimmed.startsWith('data:image') &&
     !trimmed.startsWith('/api/images/') &&
     !trimmed.startsWith('http');
@@ -325,14 +324,15 @@ function isPinterestPageSource(value) {
 function isDirectImagePreviewSource(value) {
   const content = String(value || '').trim();
   if (!content) return false;
-  if (content.startsWith('/data/') || content.startsWith('data:image') || content.startsWith('/api/images/')) return true;
+  if (content.startsWith('data:image') || content.startsWith('/api/images/')) return true;
   if (!content.startsWith('http')) return true;
 
   try {
     const url = new URL(content);
     const host = url.hostname.toLowerCase();
     const path = url.pathname.toLowerCase();
-    return host === 'pinimg.com' ||
+    return host === 'images.unsplash.com' ||
+      host === 'pinimg.com' ||
       host.endsWith('.pinimg.com') ||
       /\.(png|jpe?g|webp|gif|avif)$/.test(path);
   } catch {
@@ -1414,6 +1414,7 @@ function setupItemForm() {
   const previewContainer = document.getElementById('item-image-preview-container');
   const previewImg = document.getElementById('item-image-preview');
   const removeImgBtn = document.getElementById('btn-remove-uploaded-image');
+  const queryImageAgainBtn = document.getElementById('btn-query-image-again');
   const contentTextarea = document.getElementById('item-field-content');
   const spotifySearchQuery = document.getElementById('item-spotify-search-query');
   const spotifySearchBtn = document.getElementById('btn-search-spotify-track');
@@ -1465,6 +1466,7 @@ function setupItemForm() {
     const fallback = ensurePreviewFallback();
     previewContainer.classList.remove('d-none');
     previewContainer.style.minHeight = '6rem';
+    queryImageAgainBtn?.classList.toggle('d-none', !isImageKeywordQuery(value));
 
     if (isDirectImagePreviewSource(value)) {
       if (fallback) {
@@ -1504,6 +1506,7 @@ function setupItemForm() {
       previewContainer.classList.add('d-none');
       previewContainer.style.minHeight = '';
     }
+    queryImageAgainBtn?.classList.add('d-none');
   }
 
   function updateImagePreviewFromContent() {
@@ -1671,6 +1674,15 @@ function setupItemForm() {
     updateImagePreviewFromContent();
   });
 
+  queryImageAgainBtn?.addEventListener('click', () => {
+    const query = contentTextarea.value.trim();
+    if (!isImageKeywordQuery(query)) return;
+
+    resolvedImageCache.set(query, resolveImageSource(query));
+    showImagePreview(query);
+    showSyncBanner('Showing another Unsplash image for the same query.', false);
+  });
+
   spotifySearchBtn?.addEventListener('click', searchSpotifyTracks);
   spotifySearchQuery?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
@@ -1772,7 +1784,6 @@ function setupItemForm() {
       if (pinterestUrlInput) pinterestUrlInput.value = '';
       hideImagePreview();
       if (contentTextarea.value.startsWith('data:image') ||
-        contentTextarea.value.startsWith('/data/uploads/') ||
         contentTextarea.value.startsWith('/api/images/') ||
         isPinterestImageSource(contentTextarea.value)) {
         contentTextarea.value = '';
@@ -2009,7 +2020,6 @@ function openEditCardModal(item) {
       if (pinterestUrlInput) pinterestUrlInput.value = valToDisplay || '';
     } else if (String(valToDisplay || '').startsWith('/api/images/') ||
       String(valToDisplay || '').startsWith('/api/upload') ||
-      String(valToDisplay || '').startsWith('/data/uploads/') ||
       String(valToDisplay || '').startsWith('data:image')) {
       imageSourceMode.value = 'upload';
       if (pinterestUrlInput) pinterestUrlInput.value = '';
@@ -3190,7 +3200,7 @@ async function generateProgrammaticPdf() {
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(13);
         doc.setTextColor(94, 84, 142);
-        doc.text("🪐 ASPIRATIONAL QUOTES & PHRASES", 15, currentY);
+        doc.text("ASPIRATIONAL QUOTES & PHRASES", 15, currentY);
         currentY += 8;
 
         quotes.forEach(it => {
@@ -3236,7 +3246,7 @@ async function generateProgrammaticPdf() {
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(13);
         doc.setTextColor(94, 84, 142);
-        doc.text("✅ INTENTIONS & ACTION CHECKLISTS", 15, currentY);
+        doc.text("INTENTIONS & ACTION CHECKLISTS", 15, currentY);
         currentY += 8;
 
         notes.forEach(it => {
@@ -3281,7 +3291,7 @@ async function generateProgrammaticPdf() {
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(13);
         doc.setTextColor(94, 84, 142);
-        doc.text("🎨 VISUAL THEMES & REFLECTIONS", 15, currentY);
+        doc.text("VISUAL THEMES & REFLECTIONS", 15, currentY);
         currentY += 8;
 
         images.forEach(it => {
@@ -3303,7 +3313,13 @@ async function generateProgrammaticPdf() {
           doc.setFontSize(10);
           doc.setTextColor(100, 100, 100);
 
-          let displayConceptText = `Concept focus query: ${revealedPayload}`;
+          const revealedText = typeof revealedPayload === "string" ? revealedPayload.trim() : "";
+          const isImageReference = /^(?:https?:\/\/|\/api\/images\/)/i.test(revealedText);
+          const visualReference = isImageReference
+            ? "Curated image"
+            : (revealedText || "Selected image");
+
+          let displayConceptText = `Visual reference: ${visualReference}`;
           if (it.caption) {
             displayConceptText += `\nAnnotation: ${it.caption}`;
           }
@@ -3326,7 +3342,7 @@ async function generateProgrammaticPdf() {
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(13);
         doc.setTextColor(94, 84, 142);
-        doc.text("🔮 ADDITIONAL HORIZONS & MOTIFS", 15, currentY);
+        doc.text("ADDITIONAL HORIZONS & MOTIFS", 15, currentY);
         currentY += 8;
 
         standard.forEach(it => {

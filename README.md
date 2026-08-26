@@ -242,7 +242,7 @@ Copy `.env.example` to `.env` for local development values. `.env` is ignored by
 For coursework/demo ZIP submission:
 
 - Do not commit or submit `.env`.
-- Exclude generated and local runtime folders: `node_modules`, `bin`, `obj`, `data/uploads`, and `data/keys`.
+- Exclude generated and local runtime folders: `node_modules`, `bin`, `obj`, and `data/`.
 - `wwwroot` may be included when the submission needs to be ready to run without rebuilding the frontend.
 - Include `.env.example`, `Migrations/`, and this README.
 
@@ -257,7 +257,7 @@ npm run lint
 npm run test:professionalization
 ```
 
-`npm run clean` removes generated build folders only: `wwwroot`, `dist`, `bin`, and `obj`. It deliberately preserves `data/` and `data/uploads/`.
+`npm run clean` removes generated build folders only: `wwwroot`, `dist`, `bin`, and `obj`. It deliberately preserves the local `data/` folder.
 
 `npm run test:professionalization` runs a lightweight .NET console check project covering password hashing behavior, board permission helpers, upload rejection paths, strict email validation, and sync response diagnostics without requiring external test packages. GitHub Actions runs the frontend checks, backend build, and this harness on pushes and pull requests to `main`.
 
@@ -267,8 +267,7 @@ npm run test:professionalization
 - The project does not use ASP.NET Identity.
 - Collaboration is intentionally lightweight.
 - Sync retry state is in-memory for the current browser session; it is not durable offline storage.
-- Uploaded images are stored in PostgreSQL as base64 records and served through `/api/images/{id}`.
-- The legacy `/data/uploads` static-file path may exist for compatibility, but uploaded user files are not required for the current database-backed image flow.
+- Uploaded images are stored in PostgreSQL as base64 records and served through the authorization-protected `/api/images/{id}` endpoint.
 - Image storage is intentionally simple for the course project. At larger scale, image metadata should stay in the database while binary files move to disk or object storage.
 - Activity logs power the board activity feed; they are not intended to be a durable production audit log.
 - AI output uses Gemini when `GEMINI_API_KEY` is configured and falls back to local sample suggestions when it is missing.
