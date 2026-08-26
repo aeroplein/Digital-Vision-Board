@@ -175,18 +175,6 @@ app.UseCors("AllowFrontend");
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Serve uploaded image assets from root-level data/uploads directory to survive frontend builds
-var uploadsPath = Path.Combine(builder.Environment.ContentRootPath, "data", "uploads");
-if (!Directory.Exists(uploadsPath))
-{
-    Directory.CreateDirectory(uploadsPath);
-}
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(uploadsPath),
-    RequestPath = "/data/uploads"
-});
-
 app.UseRouting();
 app.UseRateLimiter();
 

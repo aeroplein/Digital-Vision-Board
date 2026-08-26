@@ -42,7 +42,7 @@ const curatedImageSources = [
 export function resolveImageSource(rawValue) {
   const value = (rawValue || '').trim();
   if (!value) return curatedImageSources[0].url;
-  if (value.startsWith('/data/') || value.startsWith('data:image') || value.startsWith('/api/images/')) return value;
+  if (value.startsWith('data:image') || value.startsWith('/api/images/')) return value;
   if (value.startsWith('http')) {
     if (!value.includes('images.unsplash.com/featured')) return value;
     const keyword = decodeURIComponent(value.split('?').pop() || '');
